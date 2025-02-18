@@ -10,7 +10,7 @@
 <body class="d-flex justify-content-center align-items-center vh-100 bg-light">
     <div class="card p-4 shadow-lg" style="width: 22rem;">
         <h2 class="text-center">Iniciar Sesión</h2>
-        <form action="introducir.php" method="POST">
+        <form action="autenti.php" method="POST">
             <div class="mb-3">
                 <label for="usuario" class="form-label">Usuario</label>
                 <input type="text" id="usuario" name="usuario" class="form-control" required>
