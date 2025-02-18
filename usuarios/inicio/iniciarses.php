@@ -10,7 +10,7 @@
 <body class="d-flex justify-content-center align-items-center vh-100 bg-light">
     <div class="card p-4 shadow-lg" style="width: 22rem;">
         <h2 class="text-center">Iniciar Sesión</h2>
-        <form action="auth.php" method="POST">
+        <form action="introducir.php" method="POST">
             <div class="mb-3">
                 <label for="usuario" class="form-label">Usuario</label>
                 <input type="text" id="usuario" name="usuario" class="form-control" required>
@@ -22,7 +22,7 @@
             <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
         </form>
         <div class="text-center mt-3">
-            <p>¿No tienes una cuenta? <a href="registro.php">Regístrate aquí</a></p>
+            <p>¿No tienes una cuenta? <a href="../registros/registro.php">Regístrate aquí</a></p>
         </div>
     </div>
     <!-- Bootstrap JS -->

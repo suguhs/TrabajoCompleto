@@ -9,7 +9,7 @@
 <body>
     <div class="d-flex justify-content-center align-items-center vh-100 flex-column">
         <h2 class="text-center">Bienvenido</h2>
-        <h4 class="text-center">Para poder continuar, <a href="ususarios/iniciarses.html">inicie sesión</a> o <a href="ususarios/registro.html">regístrese</a></h4>
+        <h4 class="text-center">Para poder continuar, <a href="usuarios/inicio/iniciarses.php">inicie sesión</a> o <a href="usuarios/registros/registro.php">regístrese</a></h4>
     </div>
 </body>
 </html>

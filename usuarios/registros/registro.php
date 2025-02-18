@@ -11,7 +11,7 @@
     <!--Cambiar un Poco el registro y inicio de sesion para que sea diferente no me gusta-->
     <div class="card p-4 shadow-lg" style="width: 30rem;">
         <h2 class="text-center">Iniciar Sesión</h2>
-        <form action="../introducir.php" method="POST">
+        <form action="introducir.php" method="POST">
             <div class="mb-3">
                 <label for="usuario" class="form-label">Nombre De Usuario</label>
                 <input type="text" id="usuario" name="usuario" class="form-control" required>
@@ -36,7 +36,7 @@
             <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
         </form>
         <div class="text-center mt-3">
-            <p>¿Ya tienes una cuenta? <a href="iniciarses.html">Iniciar Sesion</a></p>
+            <p>¿Ya tienes una cuenta? <a href="../inicio/iniciarses.php">Iniciar Sesion</a></p>
         </div>
     </div>
     <!-- Bootstrap JS -->

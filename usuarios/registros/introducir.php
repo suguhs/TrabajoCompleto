@@ -1,5 +1,5 @@
 <?php
-include_once 'conexion.php';
+include_once '../../conexion.php';
 
 // Obtener los datos del formulario
 $usuario = $_POST['usuario'];
