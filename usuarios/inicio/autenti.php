@@ -23,13 +23,13 @@ if (!empty($usuario) && !empty($contra)) {
         if (password_verify($contra, $hashed_password)) {
             // Autenticación exitosa
             $_SESSION['id_usu'] = $id_usu;
-            header("Location: ../prueba.php");
+            header("Location: ../../menu.php");
             exit();
         } else {
-            echo "Contraseña incorrecta. <a href='index.php'>Inténtalo de nuevo</a>";
+            echo "Contraseña incorrecta. <a href='iniciarse.php'>Inténtalo de nuevo</a>";
         }
     } else {
-        echo "Usuario no encontrado. <a href='index.php'>Inténtalo de nuevo</a>";
+        echo "Usuario no encontrado. <a href='iniciarse.php'>Inténtalo de nuevo</a>";
     }
 
     $stmt->close();
