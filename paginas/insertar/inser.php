@@ -2,6 +2,9 @@
 include_once "../../conexion.php";
 session_start();
 
+// Habilitar el modo de errores de MySQLi
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
 $query = "SELECT id_usu FROM usuario WHERE id_usu = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $_SESSION['id_usu']);
@@ -33,14 +36,26 @@ $stmt = $conn->prepare($sql_glucosa);
 $stmt->bind_param("siii", $fecha, $deporte, $lenta, $id_usuario);
 $stmt->execute();
 
-// INSERCION DE LA COMIDA
-$sql_comida = "INSERT INTO COMIDA (tipo_comida, gl_1h, gl_2h, raciones, insulina, fecha, id_usu) VALUES (?, ?, ?, ?, ?, ?, ?)";
-$stmt = $conn->prepare($sql_comida);
-$stmt->bind_param("siiiisi", $tipo_comida, $gl_1h, $gl_2h, $raciones, $insulina, $fecha, $id_usuario);
-if ($stmt->execute()) {
-    echo "Datos insertados correctamente en COMIDA.";
+// Verificar si ya existe un registro en COMIDA con la misma fecha y tipo de comida
+$sql_check_comida = "SELECT COUNT(*) FROM COMIDA WHERE fecha = ? AND tipo_comida = ? AND id_usu = ?";
+$stmt_check_comida = $conn->prepare($sql_check_comida);
+$stmt_check_comida->bind_param("ssi", $fecha, $tipo_comida, $id_usuario);
+$stmt_check_comida->execute();
+$stmt_check_comida->bind_result($count_comida);
+$stmt_check_comida->fetch();
+
+if ($count_comida == 0) {
+    // INSERCION DE LA COMIDA
+    $sql_comida = "INSERT INTO COMIDA (tipo_comida, gl_1h, gl_2h, raciones, insulina, fecha, id_usu) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql_comida);
+    $stmt->bind_param("siiiisi", $tipo_comida, $gl_1h, $gl_2h, $raciones, $insulina, $fecha, $id_usuario);
+    if ($stmt->execute()) {
+        echo "Datos insertados correctamente en COMIDA.";
+    } else {
+        echo "Error al insertar datos en COMIDA: " . $stmt->error;
+    }
 } else {
-    echo "Error al insertar datos en COMIDA: " . $stmt->error;
+    echo "Ya existe un registro de COMIDA con la misma fecha y tipo de comida.";
 }
 
 // INSERCION DE HIPERGLUCEMIA
