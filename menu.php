@@ -34,7 +34,7 @@ $stmt->fetch();
     <div class="row justify-content-center">
         <!-- Registrar -->
         <div class="col-md-5 m-2">
-            <a href="paginas/insertar.php" class="text-decoration-none">
+            <a href="paginas/insertar/insertar.php" class="text-decoration-none">
                 <div class="card bg-primary text-white p-3">
                     <div class="card-body">
                         <h3><i class="fas fa-plus-circle"></i> Registrar Datos</h3>
