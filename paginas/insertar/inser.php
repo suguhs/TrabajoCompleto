@@ -46,7 +46,7 @@ $stmt_check_comida->fetch();
 
 if ($count_comida == 0) {
     // INSERCION DE LA COMIDA
-    $sql_comida = "INSERT INTO COMIDA (tipo_comida, gl_1h, gl_2h, raciones, insulina, fecha, id_usu) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $sql_comida = "INSERT INTO comida (tipo_comida, gl_1h, gl_2h, raciones, insulina, fecha, id_usu) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql_comida);
     $stmt->bind_param("siiiisi", $tipo_comida, $gl_1h, $gl_2h, $raciones, $insulina, $fecha, $id_usuario);
     if ($stmt->execute()) {
