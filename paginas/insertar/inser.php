@@ -30,6 +30,8 @@ $hora_hipo = $_POST['hora_hipo'] ?? null;
 // Verificar los datos antes de la inserción
 echo "Datos a insertar en COMIDA: tipo_comida=$tipo_comida, gl_1h=$gl_1h, gl_2h=$gl_2h, raciones=$raciones, insulina=$insulina, fecha=$fecha, id_usuario=$id_usuario";
 
+
+//Se introduce cada vez y hace que salga error
 // INSERCION DE CONTROL DE GLUCOSA
 $sql_glucosa = "INSERT INTO CONTROL_GLUCOSA (fecha, deporte, lenta, id_usu) VALUES (?, ?, ?, ?)";
 $stmt = $conn->prepare($sql_glucosa);
