@@ -33,32 +33,26 @@ echo "Datos a insertar en COMIDA: tipo_comida=$tipo_comida, gl_1h=$gl_1h, gl_2h=
 
 //Se introduce cada vez y hace que salga error
 // INSERCION DE CONTROL DE GLUCOSA
+$sql_check_glucosa = "SELECT fecha FROM CONTROL_GLUCOSA";
+$stmt_check_glucosa = $conn->prepare($sql_check_glucosa);
+$stmt_check_glucosa->execute();
+$stmt_check_glucosa->store_result();
+$stmt_check_glucosa->bind_result($fecha_glucosa);
+
+if(!empty($fecha_glucosa)){
+   
+}else{
 $sql_glucosa = "INSERT INTO CONTROL_GLUCOSA (fecha, deporte, lenta, id_usu) VALUES (?, ?, ?, ?)";
 $stmt = $conn->prepare($sql_glucosa);
 $stmt->bind_param("siii", $fecha, $deporte, $lenta, $id_usuario);
 $stmt->execute();
+}
 
-// Verificar si ya existe un registro en COMIDA con la misma fecha y tipo de comida
-$sql_check_comida = "SELECT COUNT(*) FROM COMIDA WHERE fecha = ? AND tipo_comida = ? AND id_usu = ?";
-$stmt_check_comida = $conn->prepare($sql_check_comida);
-$stmt_check_comida->bind_param("ssi", $fecha, $tipo_comida, $id_usuario);
-$stmt_check_comida->execute();
-$stmt_check_comida->bind_result($count_comida);
-$stmt_check_comida->fetch();
-
-if ($count_comida == 0) {
     // INSERCION DE LA COMIDA
     $sql_comida = "INSERT INTO comida (tipo_comida, gl_1h, gl_2h, raciones, insulina, fecha, id_usu) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql_comida);
     $stmt->bind_param("siiiisi", $tipo_comida, $gl_1h, $gl_2h, $raciones, $insulina, $fecha, $id_usuario);
-    if ($stmt->execute()) {
-        echo "Datos insertados correctamente en COMIDA.";
-    } else {
-        echo "Error al insertar datos en COMIDA: " . $stmt->error;
-    }
-} else {
-    echo "Ya existe un registro de COMIDA con la misma fecha y tipo de comida.";
-}
+    $stmt->execute();
 
 // INSERCION DE HIPERGLUCEMIA
 if (!empty($glucosa_hiper) && !empty($hora_hiper) && !empty($correccion)) {
