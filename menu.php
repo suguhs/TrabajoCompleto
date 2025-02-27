@@ -46,7 +46,7 @@ $stmt->fetch();
 
         <!-- Consultar -->
         <div class="col-md-5 m-2">
-            <a href="paginas/visualizar.php" class="text-decoration-none">
+            <a href="paginas/visualizar/visualizar.php" class="text-decoration-none">
                 <div class="card bg-success text-white p-3">
                     <div class="card-body">
                         <h3><i class="fas fa-table"></i> Consultar Registros</h3>
@@ -58,7 +58,7 @@ $stmt->fetch();
 
         <!-- Modificar -->
         <div class="col-md-5 m-2">
-            <a href="paginas\modificar.php" class="text-decoration-none">
+            <a href="paginas/Modificador/modificar.php" class="text-decoration-none">
                 <div class="card bg-warning text-white p-3">
                     <div class="card-body">
                         <h3><i class="fas fa-edit"></i> Modificar Datos</h3>
@@ -70,7 +70,7 @@ $stmt->fetch();
 
         <!-- Borrar -->
         <div class="col-md-5 m-2">
-            <a href="paginas\borrar.php" class="text-decoration-none">
+            <a href="paginas/borrado/borrar.php" class="text-decoration-none">
                 <div class="card bg-danger text-white p-3">
                     <div class="card-body">
                         <h3><i class="fas fa-trash-alt"></i> Borrar Datos</h3>

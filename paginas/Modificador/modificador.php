@@ -2,72 +2,118 @@
 include_once "../../conexion.php";
 session_start();
 
-// Habilitar el modo de errores de MySQLi
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+// Verificar que el usuario está autenticado
+$id_usuario = $_SESSION['id_usu'];
 
-$fecha = $_POST['fecha'];
-$tipo_comida = $_POST['tipo_comida'];
-$gl_1h = $_POST['gl_1h'];
-$gl_2h = $_POST['gl_2h'];
-$raciones = $_POST['raciones'];
-$insulina = $_POST['insulina'];
-$deporte = $_POST['deporte'];
-$lenta = $_POST['lenta'];
+// Recoger datos del formulario con valores por defecto
+$fecha = $_POST['fecha'] ?? null;
+$tipo_comida = $_POST['tipo_comida'] ?? null;
+$gl_1h = $_POST['gl_1h'] ?? 0;
+$gl_2h = $_POST['gl_2h'] ?? 0;
+$raciones = $_POST['raciones'] ?? 0;
+$insulina = $_POST['insulina'] ?? 0;
+$deporte = $_POST['deporte'] ?? 0;
+$lenta = $_POST['lenta'] ?? 0;
 $glucosa_hiper = $_POST['glucosa_hiper'] ?? null;
 $hora_hiper = $_POST['hora_hiper'] ?? null;
 $correccion = $_POST['correccion'] ?? null;
 $glucosa_hipo = $_POST['glucosa_hipo'] ?? null;
 $hora_hipo = $_POST['hora_hipo'] ?? null;
-$id_usuario = $_SESSION['id_usu'];
 
-// Verificar los datos antes de la modificación
-echo "Datos a modificar: tipo_comida=$tipo_comida, gl_1h=$gl_1h, gl_2h=$gl_2h, raciones=$raciones, insulina=$insulina, fecha=$fecha, id_usuario=$id_usuario, deporte=$deporte, lenta=$lenta, glucosa_hiper=$glucosa_hiper, hora_hiper=$hora_hiper, correccion=$correccion, glucosa_hipo=$glucosa_hipo, hora_hipo=$hora_hipo";
+// Conexión y actualización en la tabla CONTROL_GLUCOSA
+if (isset($_POST['submit_control'])) {
+    // Se esperan los campos: fecha, deporte y lenta
+    $fecha = $_POST['fecha_control'];
+    $deporte = $_POST['deporte'];
+    $lenta = $_POST['lenta'];
 
-// Actualizar registros en la tabla COMIDA según la fecha y tipo de comida
-$sql_update_comida = "UPDATE COMIDA SET gl_1h = ?, gl_2h = ?, raciones = ?, insulina = ? WHERE fecha = ? AND tipo_comida = ? AND id_usu = ?";
-$stmt_update_comida = $conn->prepare($sql_update_comida);
-$stmt_update_comida->bind_param("iiisssi", $gl_1h, $gl_2h, $raciones, $insulina, $fecha, $tipo_comida, $id_usuario);
-
-if ($stmt_update_comida->execute()) {
-    echo "Datos modificados correctamente en COMIDA.";
-} else {
-    echo "Error al modificar datos en COMIDA: " . $stmt_update_comida->error;
-}
-
-// Actualizar registros en la tabla CONTROL_GLUCOSA según la fecha y id_usu
-$sql_update_glucosa = "UPDATE CONTROL_GLUCOSA SET deporte = ?, lenta = ? WHERE fecha = ? AND id_usu = ?";
-$stmt_update_glucosa = $conn->prepare($sql_update_glucosa);
-$stmt_update_glucosa->bind_param("iisi", $deporte, $lenta, $fecha, $id_usuario);
-
-if ($stmt_update_glucosa->execute()) {
-    echo "Datos modificados correctamente en CONTROL_GLUCOSA.";
-} else {
-    echo "Error al modificar datos en CONTROL_GLUCOSA: " . $stmt_update_glucosa->error;
-}
-
-// Actualizar registros en la tabla HIPERGLUCEMIA según la fecha y id_usu
-if (!empty($glucosa_hiper) && !empty($hora_hiper) && !empty($correccion)) {
-    $sql_update_hiper = "UPDATE HIPERGLUCEMIA SET glucosa_hiper = ?, hora_hiper = ?, correccion = ? WHERE fecha = ? AND id_usu = ?";
-    $stmt_update_hiper = $conn->prepare($sql_update_hiper);
-    $stmt_update_hiper->bind_param("isisi", $glucosa_hiper, $hora_hiper, $correccion, $fecha, $id_usuario);
-
-    if ($stmt_update_hiper->execute()) {
-        echo "Datos modificados correctamente en HIPERGLUCEMIA.";
-    } else {
-        echo "Error al modificar datos en HIPERGLUCEMIA: " . $stmt_update_hiper->error;
+    // Verificar que la fecha y los campos necesarios están presentes
+    if (empty($fecha) || !isset($deporte) || !isset($lenta)) {
+        die("La fecha, deporte y lenta son obligatorios.");
     }
-}
 
-// Actualizar registros en la tabla HIPOGLUCEMIA según la fecha y id_usu
-if (!empty($glucosa_hipo) && !empty($hora_hipo)) {
-    $sql_update_hipo = "UPDATE HIPOGLUCEMIA SET glucosa_hipo = ?, hora_hipo = ? WHERE fecha = ? AND id_usu = ?";
-    $stmt_update_hipo = $conn->prepare($sql_update_hipo);
-    $stmt_update_hipo->bind_param("issi", $glucosa_hipo, $hora_hipo, $fecha, $id_usuario);
-
-    if ($stmt_update_hipo->execute()) {
-        echo "Datos modificados correctamente en HIPOGLUCEMIA.";
-    } else {
-        echo "Error al modificar datos en HIPOGLUCEMIA: " . $stmt_update_hipo->error;
+    $sql = "UPDATE control_glucosa SET deporte = ?, lenta = ? WHERE fecha = ? AND id_usu = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("iisi", $deporte, $lenta, $fecha, $id_usuario);
+    if (!$stmt->execute()) {
+        error_log("Error al modificar datos en CONTROL_GLUCOSA: " . $stmt->error);
+        die("Hubo un problema al actualizar los datos. Por favor, intente más tarde.");
     }
+    $stmt->close();
 }
+
+// Conexión y actualización en la tabla COMIDA
+if (isset($_POST['submit_comida'])) {
+    // Se esperan los campos: fecha, tipo_comida, gl_1h, gl_2h, raciones e insulina
+    $fecha_comida = $_POST['fecha_comida'];
+    $tipo_comida = $_POST['tipo_comida'];
+    $gl_1h = $_POST['gl_1h'];
+    $gl_2h = $_POST['gl_2h'];
+    $raciones = $_POST['raciones'];
+    $insulina = $_POST['insulina'];
+
+    // Verificar que la fecha y tipo de comida son obligatorios
+    if (empty($fecha_comida) || empty($tipo_comida)) {
+        die("La fecha y el tipo de comida son obligatorios.");
+    }
+
+    $sql = "UPDATE comida SET gl_1h = ?, gl_2h = ?, raciones = ?, insulina = ? WHERE fecha = ? AND tipo_comida = ? AND id_usu = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("iiisssi", $gl_1h, $gl_2h, $raciones, $insulina, $fecha_comida, $tipo_comida, $id_usuario);
+    if (!$stmt->execute()) {
+        error_log("Error al modificar datos en COMIDA: " . $stmt->error);
+        die("Hubo un problema al actualizar los datos. Por favor, intente más tarde.");
+    }
+    $stmt->close();
+}
+
+// Actualizar en la tabla HIPERGLUCEMIA si hay datos
+if (!empty ($_POST['glucosa_hiper'])) {
+    // Se esperan los campos: fecha, glucosa_hiper, hora_hiper y correccion
+    $fecha_hiper = $_POST['fecha'];
+    $glucosa_hiper = $_POST['glucosa_hiper'] ?? null;
+    $hora_hiper = $_POST['hora_hiper'] ?? null;
+    $correccion = $_POST['correccion'] ?? null;
+
+    // Verificar que los campos necesarios no están vacíos
+    if (empty($glucosa_hiper) || empty($hora_hiper) || empty($correccion)) {
+        die("Faltan datos necesarios para la hiperglucemia.");
+    }
+
+    $sql = "UPDATE hiperglucemia SET glucosa = ?, hora = ?, correccion = ? WHERE fecha = ? AND id_usu = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("isisi", $glucosa_hiper, $hora_hiper, $correccion, $fecha_hiper, $id_usuario);
+    if (!$stmt->execute()) {
+        error_log("Error al modificar datos en HIPERGLUCEMIA: " . $stmt->error);
+        die("Hubo un problema al actualizar los datos. Por favor, intente más tarde.");
+    }
+    $stmt->close();
+    echo "Los datos han sido modificados correctamente.";
+}
+
+// Actualizar en la tabla HIPOGLUCEMIA si hay datos
+if (!empty($_POST['glucosa_hipo'])) {
+    // Se esperan los campos: fecha, glucosa_hipo, hora_hipo y tipo_comida_hipo
+    $fecha_hipo = $_POST['fecha'];
+    $glucosa_hipo = $_POST['glucosa_hipo'] ?? null;
+    $hora_hipo = $_POST['hora_hipo'] ?? null;
+    $tipo_comida_hipo = $_POST['tipo_comida'];
+
+    // Verificar que los campos necesarios no están vacíos
+    if (empty($glucosa_hipo) || empty($hora_hipo)) {
+        die("Faltan datos necesarios para la hipoglucemia.");
+    }
+
+    $sql = "UPDATE hipoglucemia SET glucosa = ?, hora = ? WHERE fecha = ? AND id_usu = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("issi", $glucosa_hipo, $hora_hipo, $fecha_hipo, $id_usuario);
+    if (!$stmt->execute()) {
+        error_log("Error al modificar datos en HIPOGLUCEMIA: " . $stmt->error);
+        die("Hubo un problema al actualizar los datos. Por favor, intente más tarde.");
+    }
+    $stmt->close();
+    echo "Los datos han sido modificados correctamente.";
+}
+
+
 ?>
