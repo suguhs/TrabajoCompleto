@@ -29,7 +29,8 @@ if (isset($_POST['submit_control'])) {
     $stmt->bind_param("siii", $fecha, $deporte, $lenta, $id_usuario);
     
     if ($stmt->execute()) {
-        
+        // Redirigir a opcion_inser.php después de la inserción
+        header('Location: opcion_inser.php');
         exit();
     } else {
         echo "Error en CONTROL_GLUCOSA: " . $stmt->error;
@@ -64,7 +65,8 @@ if (isset($_POST['submit_comida'])) {
         $stmt->bind_param("siiiisi", $tipo_comida, $gl_1h, $gl_2h, $raciones, $insulina, $fecha_comida, $id_usuario);
         
         if ($stmt->execute()) {
-            
+            // Redirigir a opcion_inser.php después de la inserción
+            header('Location: opcion_inser.php');
             exit();
         } else {
             echo "Error al insertar datos en COMIDA: " . $stmt->error;
@@ -91,7 +93,11 @@ if (isset($_POST['submit_hiperglucemia'])) {
         $sql_hiper = "INSERT INTO HIPERGLUCEMIA (glucosa, hora, correccion, tipo_comida, fecha, id_usu) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql_hiper);
         $stmt->bind_param("isisss", $glucosa_hiper, $hora_hiper, $correccion,$tipo_comida_hiper, $fecha_hiper, $id_usuario);
-        $stmt->execute();
+        if ($stmt->execute()) {
+            // Redirigir a opcion_inser.php después de la inserción
+            header('Location: opcion_inser.php');
+            exit();
+        }
         $stmt->close();
     }
 }
@@ -112,7 +118,11 @@ if (isset($_POST['submit_hipo'])) {
         $stmt = $conn->prepare($sql_hipo);
         // Se corrige la variable en bind_param: usar $tipo_comida_hipo en lugar de $tipo_comida_hiper
         $stmt->bind_param("isssi", $glucosa_hipo, $hora_hipo, $tipo_comida_hipo, $fecha, $id_usuario);
-        $stmt->execute();
+        if ($stmt->execute()) {
+            // Redirigir a opcion_inser.php después de la inserción
+            header('Location: opcion_inser.php');
+            exit();
+        }
         $stmt->close();
     }
 }

@@ -1,51 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eliminar Registro</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        form {
-            max-width: 400px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        label, input, select {
-            display: block;
-            width: 100%;
-            margin-bottom: 10px;
-        }
-        button {
-            background-color: red;
-            color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: darkred;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eliminar Registro</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h2>Eliminar Registro</h2>
-    <form action="borrador.php" method="post">
-        <label for="fecha">Fecha:</label>
-        <input type="date" id="fecha" name="fecha" required>
-
-        <label for="tipo_comida">Tipo de Comida:</label>
-        <select id="tipo_comida" name="tipo_comida" required>
+<body class="bg-light d-flex justify-content-center align-items-center" style="height: 100vh;">
+  <div class="card shadow" style="max-width: 400px; width: 100%;">
+    <div class="card-header bg-danger text-white text-center">
+      <h2 class="mb-0">Eliminar Registro</h2>
+    </div>
+    <div class="card-body">
+      <form action="borrador.php" method="post">
+        <div class="mb-3">
+          <label for="fecha" class="form-label">Fecha:</label>
+          <input type="date" id="fecha" name="fecha" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label for="tipo_comida" class="form-label">Tipo de Comida:</label>
+          <select id="tipo_comida" name="tipo_comida" class="form-select" required>
             <option value="desayuno">Desayuno</option>
             <option value="almuerzo">Almuerzo</option>
             <option value="cena">Cena</option>
-        </select>
-
-        <button type="submit">Eliminar</button>
-    </form>
+          </select>
+        </div>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-danger">Eliminar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+    

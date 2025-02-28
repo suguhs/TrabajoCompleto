@@ -1,42 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Registro de Comida</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-<h2 class="mt-4">Registro de Comida</h2>
+<body class="bg-light">
+  <div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow" style="width: 100%; max-width: 500px;">
+      <div class="card-header bg-warning text-white text-center">
+        <h2 class="mb-0">Registro de Comida</h2>
+      </div>
+      <div class="card-body">
         <form action="../modificador.php" method="POST">
-            <div class="form-group">
-                <label for="tipo_comida" class="form-label">Tipo de Comida:</label>
-                <select id="tipo_comida" name="tipo_comida" class="form-control" required>
-                    <option>Desayuno</option>
-                    <option>Comida</option>
-                    <option>Cena</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="fecha_comida">Fecha:</label>
-                <input type="date" name="fecha_comida" id="fecha_comida" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="gl_1h">Glucosa 1h después:</label>
-                <input type="number" name="gl_1h" id="gl_1h" class="form-control" min="0" required>
-            </div>
-            <div class="form-group">
-                <label for="gl_2h">Glucosa 2h después:</label>
-                <input type="number" name="gl_2h" id="gl_2h" class="form-control" min="0" required>
-            </div>
-            <div class="form-group">
-                <label for="raciones">Raciones:</label>
-                <input type="number" name="raciones" id="raciones" class="form-control" min="0" required>
-            </div>
-            <div class="form-group">
-                <label for="insulina">Insulina:</label>
-                <input type="number" name="insulina" id="insulina" class="form-control" min="0" required>
-            </div>
-            <button type="submit" name="submit_comida" class="btn btn-primary mt-2 w-100">Añadir Comida</button>
+          <div class="mb-3">
+            <label for="tipo_comida" class="form-label">Tipo de Comida:</label>
+            <select id="tipo_comida" name="tipo_comida" class="form-select" required>
+              <option value="Desayuno">Desayuno</option>
+              <option value="Comida">Comida</option>
+              <option value="Cena">Cena</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="fecha_comida" class="form-label">Fecha:</label>
+            <input type="date" name="fecha_comida" id="fecha_comida" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="gl_1h" class="form-label">Glucosa 1h después:</label>
+            <input type="number" name="gl_1h" id="gl_1h" class="form-control" min="0" required>
+          </div>
+          <div class="mb-3">
+            <label for="gl_2h" class="form-label">Glucosa 2h después:</label>
+            <input type="number" name="gl_2h" id="gl_2h" class="form-control" min="0" required>
+          </div>
+          <div class="mb-3">
+            <label for="raciones" class="form-label">Raciones:</label>
+            <input type="number" name="raciones" id="raciones" class="form-control" min="0" required>
+          </div>
+          <div class="mb-3">
+            <label for="insulina" class="form-label">Insulina:</label>
+            <input type="number" name="insulina" id="insulina" class="form-control" min="0" required>
+          </div>
+          <button type="submit" name="submit_comida" class="btn btn-warning w-100">Añadir Comida</button>
         </form>
+      </div>
+    </div>
+  </div>
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

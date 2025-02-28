@@ -18,7 +18,8 @@ $stmt_delete_comida = $conn->prepare($sql_delete_comida);
 $stmt_delete_comida->bind_param("ssi", $fecha, $tipo_comida, $id_usuario);
 
 if ($stmt_delete_comida->execute()) {
-    echo "Datos eliminados correctamente en COMIDA.";
+    header('Location: resp_borra.php');
+    exit();
 } else {
     echo "Error al eliminar datos en COMIDA: " . $stmt_delete_comida->error;
 }
@@ -29,7 +30,8 @@ $stmt_delete_glucosa = $conn->prepare($sql_delete_glucosa);
 $stmt_delete_glucosa->bind_param("si", $fecha, $id_usuario);
 
 if ($stmt_delete_glucosa->execute()) {
-    echo "Datos eliminados correctamente en CONTROL_GLUCOSA.";
+    header('Location: resp_borra.php');
+    exit();
 } else {
     echo "Error al eliminar datos en CONTROL_GLUCOSA: " . $stmt_delete_glucosa->error;
 }
@@ -40,7 +42,8 @@ $stmt_delete_hiper = $conn->prepare($sql_delete_hiper);
 $stmt_delete_hiper->bind_param("si", $fecha, $id_usuario);
 
 if ($stmt_delete_hiper->execute()) {
-    echo "Datos eliminados correctamente en HIPERGLUCEMIA.";
+    header('Location: resp_borra.php');
+    exit();
 } else {
     echo "Error al eliminar datos en HIPERGLUCEMIA: " . $stmt_delete_hiper->error;
 }
@@ -51,7 +54,8 @@ $stmt_delete_hipo = $conn->prepare($sql_delete_hipo);
 $stmt_delete_hipo->bind_param("si", $fecha, $id_usuario);
 
 if ($stmt_delete_hipo->execute()) {
-    echo "Datos eliminados correctamente en HIPOGLUCEMIA.";
+    header('Location: resp_borra.php');
+    exit();
 } else {
     echo "Error al eliminar datos en HIPOGLUCEMIA: " . $stmt_delete_hipo->error;
 }

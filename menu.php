@@ -46,7 +46,7 @@ $stmt->fetch();
 
         <!-- Consultar -->
         <div class="col-md-5 m-2">
-            <a href="paginas/visualizar/visualizar.php" class="text-decoration-none">
+            <a href="paginas/visualizar/selector_visualizar.php" class="text-decoration-none">
                 <div class="card bg-success text-white p-3">
                     <div class="card-body">
                         <h3><i class="fas fa-table"></i> Consultar Registros</h3>
@@ -75,6 +75,18 @@ $stmt->fetch();
                     <div class="card-body">
                         <h3><i class="fas fa-trash-alt"></i> Borrar Datos</h3>
                         <p>Elimina registros almacenados en la base de datos.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Estadísticas -->
+        <div class="col-md-5 m-2">
+            <a href="paginas\stats\estadisticas.php" class="text-decoration-none">
+                <div class="card bg-info text-white p-3">
+                    <div class="card-body">
+                        <h3><i class="fas fa-chart-bar"></i> Estadísticas</h3>
+                        <p>Visualiza estadísticas de los registros.</p>
                     </div>
                 </div>
             </a>

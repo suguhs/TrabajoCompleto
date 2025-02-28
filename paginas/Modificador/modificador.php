@@ -40,6 +40,8 @@ if (isset($_POST['submit_control'])) {
         die("Hubo un problema al actualizar los datos. Por favor, intente más tarde.");
     }
     $stmt->close();
+    header('Location: resp_modi.php');
+    exit();
 }
 
 // Conexión y actualización en la tabla COMIDA
@@ -65,6 +67,8 @@ if (isset($_POST['submit_comida'])) {
         die("Hubo un problema al actualizar los datos. Por favor, intente más tarde.");
     }
     $stmt->close();
+    header('Location: resp_modi.php');
+    exit();
 }
 
 // Actualizar en la tabla HIPERGLUCEMIA si hay datos
@@ -88,7 +92,8 @@ if (!empty ($_POST['glucosa_hiper'])) {
         die("Hubo un problema al actualizar los datos. Por favor, intente más tarde.");
     }
     $stmt->close();
-    echo "Los datos han sido modificados correctamente.";
+   header('Location: resp_modi.php');
+    exit();
 }
 
 // Actualizar en la tabla HIPOGLUCEMIA si hay datos
@@ -112,7 +117,8 @@ if (!empty($_POST['glucosa_hipo'])) {
         die("Hubo un problema al actualizar los datos. Por favor, intente más tarde.");
     }
     $stmt->close();
-    echo "Los datos han sido modificados correctamente.";
+    header('Location: resp_modi.php');
+    exit();
 }
 
 
