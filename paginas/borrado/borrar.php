@@ -14,9 +14,14 @@
     </div>
     <div class="card-body">
       <form action="borrador.php" method="post">
-        <div class="mb-3">
-          <label for="fecha" class="form-label">Fecha:</label>
-          <input type="date" id="fecha" name="fecha" class="form-control" required>
+      <div class="mb-3">
+          <label for="fecha">Selecciona una fecha:</label>
+          <input type="date" id="fecha" name="fecha_control" min="1975-01-01" required>
+          <script>
+            // Obtener la fecha de hoy en formato YYYY-MM-DD
+            let hoy = new Date().toISOString().split("T")[0];
+            document.getElementById("fecha").setAttribute("max", hoy);
+          </script>
         </div>
         <div class="mb-3">
           <label for="tipo_comida" class="form-label">Tipo de Comida:</label>
